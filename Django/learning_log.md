@@ -15,7 +15,16 @@
 ```
 - 新建项目
 ```shell
-django-admin startproject learning_log
-
+django-admin startproject learning_log .
 ```
+- 目录说明
+
+  |    文件     |        说明        |
+  | :---------: | :----------------: |
+  |   asgi.py   |                    |
+  | settings.py | 系统交互和项目管理 |
+  |   urls.py   | 网页响应浏览器请求 |
+  |   wsgi.py   |  web服务网关接口   |
+
+  
 

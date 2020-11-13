@@ -1,3 +1,7 @@
 *.svg
 # python 虚拟环境
 **/ll_env/
+# 缓存 临时文件
+**/__pycache__/
+*.pyc
+*.pyo
