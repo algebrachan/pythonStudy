@@ -3,7 +3,7 @@ import pygal
 from pygal.style import LightSolarizedStyle as LCS, LightStyle as LS
 
 # 执行API调用并存储响应
-language = "javascript"
+language = "python"
 url = "https://api.github.com/search/repositories?q=language:{}&sort=star".format(
     language)
 r = requests.get(url)
