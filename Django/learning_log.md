@@ -5,11 +5,16 @@
 - 建立虚拟环境,将该项目的库和别的项目分离
 ```shell
  # 建立虚拟环境
- python -m venv ll_env
+ pip install virtualnev
+ virtualenv new_env
  # 激活虚拟环境
- ll_env\Scripts\activate
+ env\Scripts\activate
  # 停止虚拟环境
  deactivate
+ # 使用virtualenvwrapper
+ pip install virtualenvwrapper-win
+ # 配置环境变量
+ 
  # 安装Django
  pip install Django
 ```
