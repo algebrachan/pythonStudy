@@ -18,4 +18,5 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(r'^activities/',include('activities.urls')), # 指向子路由
 ]
