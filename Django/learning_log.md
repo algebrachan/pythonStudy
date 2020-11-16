@@ -23,7 +23,7 @@
 django-admin startproject learning_log .
 # 创建应用程序
 python manage.py startapp learning_logs
-# 激活模型
+# 生成迁移文件 进行迁移
 python manage.py makemigrations learning_logs
 python manage.py migrate
 ```
