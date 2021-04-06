@@ -2,6 +2,7 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.decomposition import PCA
 import jieba
 # import sklearn
 
@@ -70,9 +71,20 @@ def tidif_demo():
     print("特征名字\n", transfer.get_feature_names())
 
 
+def pca_demo():
+    """PCA降维
+    """
+    data = [[2,8,4,5],[6,3,0,8],[5,4,9,1]]
+    transfer = PCA(n_components=2)
+    data_new = transfer.fit_transform(data)
+    print("data_new\n",data_new)
+    return None
+
+
 if __name__ == "__main__":
     # datasets_demo()
     # dict_demo()
     # count_demo()
     # cut_word("我爱北京天安门")
-    tidif_demo()
+    # tidif_demo()
+    pca_demo()
