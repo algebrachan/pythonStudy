@@ -1,0 +1,8 @@
+# 项目缓存文件
+**/__pycache__/
+*.pyc
+*.pyo
+.pytest_cache
+# 项目日志文件
+*.log
+*.log.*
