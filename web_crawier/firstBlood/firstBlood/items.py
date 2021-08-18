@@ -12,3 +12,6 @@ class FirstbloodItem(scrapy.Item):
     author = scrapy.Field()
     content = scrapy.Field()
     pass
+
+class ImgsItem(scrapy.Item):
+    src = scrapy.Field()

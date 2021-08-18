@@ -1,4 +1,4 @@
-# Scrapy settings for firstBlood project
+# Scrapy settings for wangyPro project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,20 +7,19 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'firstBlood'
+BOT_NAME = 'wangyPro'
 
-SPIDER_MODULES = ['firstBlood.spiders']
-NEWSPIDER_MODULE = 'firstBlood.spiders'
-FEED_EXPORT_ENCODING = 'utf-8-sig'
+SPIDER_MODULES = ['wangyPro.spiders']
+NEWSPIDER_MODULE = 'wangyPro.spiders'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
+
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
 LOG_LEVEL = 'ERROR'
-
-
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -47,13 +46,13 @@ LOG_LEVEL = 'ERROR'
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'firstBlood.middlewares.FirstbloodSpiderMiddleware': 543,
+#    'wangyPro.middlewares.WangyproSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'firstBlood.middlewares.FirstbloodDownloaderMiddleware': 543,
+   'wangyPro.middlewares.WangyproDownloaderMiddleware': 543,
 }
 
 # Enable or disable extensions
@@ -65,9 +64,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-  #  'firstBlood.pipelines.imgsPipeLine': 300,
-  #  'firstBlood.pipelines.FirstbloodPipeline': 300,
-  #  'firstBlood.pipelines.mysqlPipeLine': 400,
+   'wangyPro.pipelines.WangyproPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,5 +87,3 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-IMAGES_STORE = './imgs'

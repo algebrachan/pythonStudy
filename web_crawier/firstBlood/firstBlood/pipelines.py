@@ -6,6 +6,8 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+import scrapy
+from scrapy.pipelines.images import ImagesPipeline
 import pymysql
 
 class FirstbloodPipeline:
@@ -49,4 +51,15 @@ class mysqlPipeLine:
         self.cursor.close()
         self.conn.close()
 
+class imgsPipeLine(ImagesPipeline):
+    # 对item中的图片进行请求操作
+    def get_media_requests(self, item, info):
+        yield scrapy.Request(item['src'])
+    
+    # 定制图片名称
+    def file_path(self, request, response=None, info=None):
+        file_name = request.url.split('/')[-1]
+        return file_name
 
+    def item_completed(self, results, item, info):
+        return item # 返回给下一个管道
