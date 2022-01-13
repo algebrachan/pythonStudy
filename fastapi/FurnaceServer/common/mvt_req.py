@@ -1,46 +1,35 @@
-from pydantic import BaseModel, constr, validator
+from pydantic import BaseModel
 from typing import Optional
-import re
+from datetime import datetime
 
+class ReqUpRealtimeServer(BaseModel):
+  """更新服务器实时数据"""
+  server_ip: Optional[str] = None   # 可选
+  cpu_info: dict = {}               # cpu信息
+  memory_info: dict = {}            # 内存信息
+  disk_info: dict = {}              # 磁盘信息
+  gpu_info: list = []               # 显卡信息 列表
+  model_info: dict = {}             # 模型状态
 
-class ReqModifyServer(BaseModel):
-    """修改服务器信息请求体
-    """
-    server_ip: str  # 服务器ip地址 必填
-    server_name: Optional[str] = None  # 可选，
-    server_cpu: Optional[str] = None
-    server_os: Optional[str] = None
-    server_disk: Optional[str] = None
-    state: int = 1  # 服务器状态 0不可用 1可用 设置0为删除
+class ReqUpRealtimeModel(BaseModel):
+  """更新模型实时数据"""
+  server_ip: Optional[str] = None   # 可选
+  model_list: list = []             # 模型列表
 
+class ReqUpAlarmInfo(BaseModel):
+  """更新告警信息"""
+  fur_series: str       # 系列号
+  fur_id: int           # 炉台号
+  alarm_time: datetime  # 预警时间
+  alarm_craft: int      # 工步
+  alarm_func: str       # 功能
+  alarm_result: str     # 预警结果
+  server_ip: Optional[str] = None  # 可选
 
-class ReqUpdateFurState(BaseModel):
-    """ 更新炉台状态
-    """
-    furnace_id: int  # 炉台ID必填
-    furnace_series: str
-    furnace_state: int = 0  # 默认0为空闲
-    running_time: int = 0
-    furnace_host: Optional[str] = None  # 可选
-
-
-
-class ReqUpdateHistoryBroken(BaseModel):
-    """ 更新断苞历史数据
-    """ 
-    # 1：放肩 2：等径
-    date: str  # 统计日期 必填
-    diameter_broken_nums: int = 0  # 检出等径断苞数量
-    shouldering_broken_nums: int = 0  # 检出扩肩断苞数量
-    server_ip:Optional[str] = None # 可选
-
-
-class ReqUpdateSeriesBroken(BaseModel):
-    """ 更新当日系列断苞统计
-    """
-    type: int = 0  # 类型 1：放肩 2：等径
-    series: str  # 系列名
-    broken_nums: int = 0  # 检出断苞数量
-    r_name_list: list = ['broken_shouldering', 'broken_diameter']
-
-
+class ReqUpFurInfo(BaseModel):
+  """更新炉台实时状态"""
+  furnace_id: int        # 炉台id
+  furnace_series: str    # 炉台系列
+  furnace_state: int = 0 # 炉台状态
+  server_ip: Optional[str] = None # 炉台服务器地址
+  online: int = 1         # 0 离线 1 在线 

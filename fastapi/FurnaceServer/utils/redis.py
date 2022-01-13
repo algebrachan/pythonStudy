@@ -13,11 +13,14 @@ class Operation_Redis(object):
   def exists(self,*names):
     return self.__connect_client.exists(*names)
   
-  def scan(self,**kwargs):
+  def scan(self,**kwargs):# 模糊匹配
     return self.__connect_client.scan(**kwargs)
 
   def delete(self,*names):
     return self.__connect_client.delete(*names)
+
+  def incr(self,key):
+    return self.__connect_client.incr(key)
 
   def hash2obj(self, obj: object, name: str):
     """json转化存储方法 hset 传入的是__dict__ 对象
@@ -43,6 +46,19 @@ class Operation_Redis(object):
         pass
     return False
 
+  def set(self,key,str,sec):
+    """字符串缓存"""
+    return self.__connect_client.set(key,str,sec)
+
+  def get(self,key):
+    return self.__connect_client.get(key)
+
+  def hset(self,name,key,value):
+    return self.__connect_client.hset(name,key,value)
+  
+  def hget(self,name,key):
+    return self.__connect_client.hget(name,key)
+
   def set_redis_str(self,dict_obj,key,sec):
     ''' 数据缓存 '''
     self.__connect_client.set(key,json.dumps(dict_obj),sec)
@@ -61,6 +77,9 @@ class Operation_Redis(object):
   def set_redis(self, obj, key, sec):
     self.__obj2hash(obj, key)
     self.__connect_client.expire(key, sec)  # 过期时间
+  
+  def expire(self,key,sec):
+    return self.__connect_client.expire(key,sec)
 
   def close(self):
     self.__connect_client.close()

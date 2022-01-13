@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ```shell
 uvicorn main:app --reload
-uvicorn main:app --host '0.0.0.0' --port 8065 --reload --workers 2
+uvicorn main:app --host '0.0.0.0' --port 8050 --reload --workers 2
 # 退出
 ctrl+C
 ```

@@ -8,39 +8,48 @@ class Error(Enum):
     UNKNOWN = -1
     SUCCESS = 0
     NO_DATA = 1
+    TOKEN_OT = 2
     OPT_ERR = 3
     SERVER_EXCEPTION = 4
     NO_AUTH = 5
     PARAM_ERR = 6
 
 
+
 dict_error = {
     'UNKNOWN': '未知错误',
     'SUCCESS': '请求成功',
     'NO_DATA': '没有数据',
+    'TOKEN_OT': 'token过期',
     'OPT_ERR': '操作异常',
     'SERVER_EXCEPTION': '服务器异常',
     'NO_AUTH': '没有权限',
     'PARAM_ERR': '参数错误'
 }
 
-list_model = ['其他', '熔接', '扩肩', '等径', '收尾', '粘渣']
+list_mode = ['diameter','shouldering']
+
+
 dict_model = {
+    '4':'熔料',
     '5':'熔接',
     '9':'放肩',
     '11':'等径',
     '12':'收尾',
+    '20':'取段',
     '28':'粘渣',
+    '29':'回熔',
     # '99':'其他',
 }
 
 dict_model_index = {
-    'seeding': 1,
-    'shaking': 2,
-    'shouldering': 3,
-    'diameter': 4,
-    'end_cone': 5,
-    'melting': 6,
+    'diameter': 1,
+    'shouldering': 2,
+    'melting': 3,
+    'end_cone': 4,
+    'seeding': 5,
+    'crystal': 6,
+    'dissolve': 7,
 }
 
 
@@ -54,9 +63,9 @@ class ResponseBase(BaseModel):
     msg: str = "请求成功"
     data: dict = {}
 
-    def error(self, err_code: Error):
+    def error(self, err_code: Error, err_msg: str =''):
         self.code = err_code.value
-        self.msg = dict_error[err_code.name]
+        self.msg = f'{dict_error[err_code.name]} {err_msg}'
         self.data = False
         # error枚举类
 
@@ -64,6 +73,7 @@ class ResponseBase(BaseModel):
         self.code = 0
         self.msg = "操作成功"
         self.data = True
+    
 
 def valid_ip(ip: str):
     try:

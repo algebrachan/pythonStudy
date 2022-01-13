@@ -1,9 +1,9 @@
 import pymongo
 import sys
-import datetime
+from datetime import datetime, timedelta
 
 class Operation_Mongo(object):
-  def __init__(self, usr='admin', passwd=123456, host='10.50.63.63', port=27017,db='furnace'):
+  def __init__(self, usr='admin', passwd=123456, host='127.0.0.1', port=27017, db='furnace'):
     self.connect_client = pymongo.MongoClient(f"mongodb://{usr}:{passwd}@{host}:{port}/")
     self.mydb = self.connect_client[db] # 连接指定数据库
   
@@ -67,6 +67,15 @@ class Operation_Mongo(object):
       print('查询条件与需要修改的字段只能是dict类型')
       return None
 
+  def aggregate_coolection(self,collection_name,pipeline):
+    my_col = self.mydb[collection_name]
+    try:
+      relust = my_col.aggregate(pipeline)
+      return relust
+    except TypeError as e:
+      print('聚合函数')
+      return None
+
   def delete_one_collection(self,collection_name,search_col):#删除集合中的文档
     my_col = self.mydb[collection_name]
     try:
@@ -104,32 +113,14 @@ class Operation_Mongo(object):
 mongo_session = Operation_Mongo()
 
 if __name__ == '__main__':
-  data = {}
-  # data[]
-  # 获取当天的时间 减去 10分钟
-  # print(datetime.date.today()-datetime.timedelta(minutes=10))
-  # print(datetime.date.today()-datetime.timedelta(minutes=10))
-  # print(datetime.datetime.today()-datetime.timedelta(minutes=10))
-  # print(datetime.datetime.now())
-  # print(datetime.datetime.today())
-  p = datetime.datetime(2020,9,10)-datetime.timedelta(minutes=10)
+  pipeline = [
+    {'$match':{'date':{'$gte':datetime.today()-timedelta(days=31)},'mode':'diameter'}},
+    {'$group':{'_id':"$date",'total_warn':{'$sum':"$warning_nums"},'total_error':{'$sum':"$error_nums"},'total_missed':{'$sum':"$missed_nums"}}},
+    {'$sort':{'_id':1}}
+  ]
+  res = mongo_session.aggregate_coolection('alarm_desc',pipeline)
+  for i in res:
+    print(i)
+  mongo_session.close_connect()
 
-  # print(datetime.date.now())
-  data['date'] = datetime.datetime(2021,7,1)
-  data['craft'] = 'seed'
-  data['std'] = 90
-  data['std_o'] = 10
-  data['l_o'] = 4
-  data['s_o'] = 3
-  data['b_o'] = 3
-  om = Operation_Mongo()
-  # x = om.select_one_collection('std_stic',search_col={'craft':'weld'})
-  # date = x['date']
-  # date_str = date.strftime("%Y-%m-%d")
-  # print(date_str)
-  # print(type(date_str))
-  om.drop_collection('std_stic')
-  om.drop_collection('2B20_craft')
-  om.drop_collection('2B21_craft')
-  om.close_connect()
 

@@ -109,7 +109,11 @@ def calculate_ot(data:list,wt:float):
   except Exception as e:
     return None
     
-
+if __name__ == '__main__':
+  di = {}
+  di['123'] = 1
+  print(di)
+    
 
 
 

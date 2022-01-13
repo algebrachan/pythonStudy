@@ -1,4 +1,6 @@
 import requests
+import time
+import hashlib
 
 requests.adapters.DEFAULT_RETRIES = 5  # 增加重连次数
 requests.adapters.DEFAULT_POOL_TIMEOUT = 10  # 超时时间
@@ -25,3 +27,19 @@ def str2int(num):
     except:
         return 0
     
+# md5加密 username + timestamp
+def get_token(username):
+  t = time.time()
+  t_stamp = int(t)
+  hl = hashlib.md5() # 创建md5对象
+  strs = username + str(t_stamp)
+  hl.update(strs.encode("utf8"))
+  token = hl.hexdigest() # 获取十六进制数据字符串值
+  return token
+
+
+if __name__ == '__main__':
+    get_token('wc')
+    
+
+
